@@ -1,132 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account Login</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            margin: 0; 
-            padding: 0; 
-            background-color: #f3f4f6; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .login-container {
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            width: 90%;
-            max-width: 360px;
-            padding: 40px 30px;
-        }
-        h2 { 
-            color: #111827; 
-            margin-top: 0;
-            margin-bottom: 24px;
-            text-align: center;
-            font-size: 24px;
-        }
-
-        .input-group {
-            margin-bottom: 18px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 6px;
-            color: #374151;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        /* Styling for both text and password fields */
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            font-size: 14px;
-            box-sizing: border-box;
-            outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-
-        input:focus {
-            border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
-        }
-
-        .login-btn {
-            width: 100%;
-            padding: 12px;
-            background-color: #2563eb;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            margin-top: 10px;
-        }
-
-        .login-btn:hover {
-            background-color: #1d4ed8;
-        }
-
-        .footer-text {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 13px;
-            color: #6b7280;
-        }
-
-        .footer-text a {
-            color: #2563eb;
-            text-decoration: none;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Login</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f3f4f6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .login-container {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 360px;
+      padding: 40px 30px;
+    }
+    h2 { text-align: center; margin-bottom: 24px; }
+    .input-group { margin-bottom: 18px; }
+    label { font-size: 14px; margin-bottom: 6px; display: block; }
+    input { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; }
+    .login-btn { width: 100%; padding: 12px; background: #2563eb; color: #fff; border: none; border-radius: 6px; cursor: pointer; }
+    .login-btn:hover { background: #1d4ed8; }
+  </style>
 </head>
 <body>
+  <div class="login-container">
+    <h2>Sign Up</h2>
+    <form onsubmit="signup(); return false;">
+      <div class="input-group">
+        <label for="signup-email">Email</label>
+        <input type="text" id="signup-email" placeholder="Enter your email" required>
+      </div>
+      <div class="input-group">
+        <label for="signup-password">Password</label>
+        <input type="password" id="signup-password" placeholder="Enter your password" required>
+      </div>
+      <button type="submit" class="login-btn">Sign Up</button>
+    </form>
 
-    <div class="login-container">
-        <h2>Sign In</h2>
-        
-        <!-- You can keep your Formspree link here if you want to test what text goes through -->
-        <form action= method="POST">
-            
-            <div class="input-group">
-                <label for="username">Username or Email</label>
-                <input type="text" id="username" name="username" placeholder="Enter your username" required>
-            </div>
+    <h2>Login</h2>
+    <form onsubmit="login(); return false;">
+      <div class="input-group">
+        <label for="login-email">Email</label>
+        <input type="text" id="login-email" placeholder="Enter your email" required>
+      </div>
+      <div class="input-group">
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" placeholder="Enter your password" required>
+      </div>
+      <button type="submit" class="login-btn">Log In</button>
+    </form>
+  </div>
 
-            <div class="input-group">
-                <label for="password">Password</label>
-                <!-- Using type="password" hides the characters with dots as you type -->
-                <input type="password" id="password" name="password" placeholder="Enter your password" required>
-            </div>
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const supabaseUrl = "https://lknntbnvipduoolgrcrh.supabase.co";
+    const supabaseKey = "YOUR_PUBLIC_ANON_KEY"; // replace with your key
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-            <button type="submit" class="login-btn">Log In</button>
-            
-        </form>
+    async function signup() {
+      const email = document.getElementById("signup-email").value;
+      const password = document.getElementById("signup-password").value;
+      const { data, error } = await supabase.auth.signUp({ email, password });
+      if (error) alert(error.message);
+      else alert("Signed up: " + email);
+    }
 
-        <div class="footer-text">
-            <p>Don't have an account? <a href="#">Create one</a></p>
-        </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
-  const supabaseUrl = "https://lknntbnvipduoolgrcrh.supabase.co";
-  const supabaseKey = "YOUR_PUBLIC_ANON_KEY"; // paste from dashboard
-  const supabase = supabase.createClient(supabaseUrl, supabaseKey);
-</script>
-
-
+    async function login() {
+      const email = document.getElementById("login-email").value;
+      const password = document.getElementById("login-password").value;
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) alert(error.message);
+      else alert("Logged in: " + email);
+    }
+  </script>
 </body>
 </html>
